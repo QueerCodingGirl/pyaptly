@@ -69,11 +69,11 @@ def print_example():  # pragma: no cover
          graph [splines=line];
     """)
     for i in range(len(example[0])):
-        print("    c%03d [shape=triangle];" % i)
+        print(("    c%03d [shape=triangle];" % i))
         for provides in example[0][i]:
-            print("    c%03d -> r%03d;" % (i, provides))
+            print(("    c%03d -> r%03d;" % (i, provides)))
         for requires in example[1][i]:
-            print("    r%03d -> c%03d;" % (requires, i))
+            print(("    r%03d -> c%03d;" % (requires, i)))
 
     print("}")
 

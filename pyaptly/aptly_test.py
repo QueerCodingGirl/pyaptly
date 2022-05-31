@@ -299,23 +299,23 @@ def test_snapshot_update_threetimes_rotating():
                 ]
             ).issubset(state.snapshots)
             expected = {
-                u'fake-current': set([
-                    u'fakerepo01-current', u'fakerepo02-current'
+                'fake-current': set([
+                    'fakerepo01-current', 'fakerepo02-current'
                 ]),
-                u'fake-current-rotated-20121010T1010Z': set([
-                    u'fakerepo01-current-rotated-20121010T1010Z',
-                    u'fakerepo02-current-rotated-20121010T1010Z'
+                'fake-current-rotated-20121010T1010Z': set([
+                    'fakerepo01-current-rotated-20121010T1010Z',
+                    'fakerepo02-current-rotated-20121010T1010Z'
                 ]),
-                u'fake-current-rotated-20121011T1010Z': set([
-                    u'fakerepo01-current-rotated-20121011T1010Z',
-                    u'fakerepo02-current-rotated-20121011T1010Z',
+                'fake-current-rotated-20121011T1010Z': set([
+                    'fakerepo01-current-rotated-20121011T1010Z',
+                    'fakerepo02-current-rotated-20121011T1010Z',
                 ]),
-                u'fakerepo01-current': set([]),
-                u'fakerepo01-current-rotated-20121010T1010Z': set([]),
-                u'fakerepo01-current-rotated-20121011T1010Z': set([]),
-                u'fakerepo02-current': set([]),
-                u'fakerepo02-current-rotated-20121010T1010Z': set([]),
-                u'fakerepo02-current-rotated-20121011T1010Z': set([])
+                'fakerepo01-current': set([]),
+                'fakerepo01-current-rotated-20121010T1010Z': set([]),
+                'fakerepo01-current-rotated-20121011T1010Z': set([]),
+                'fakerepo02-current': set([]),
+                'fakerepo02-current-rotated-20121010T1010Z': set([]),
+                'fakerepo02-current-rotated-20121011T1010Z': set([])
             }
             assert state.snapshot_map == expected
 
@@ -339,29 +339,29 @@ def test_snapshot_update_threetimes_rotating():
                 ]
             ).issubset(state.snapshots)
             expected = {
-                u'fake-current': set([
-                    u'fakerepo01-current', u'fakerepo02-current'
+                'fake-current': set([
+                    'fakerepo01-current', 'fakerepo02-current'
                 ]),
-                u'fake-current-rotated-20121010T1010Z': set([
-                    u'fakerepo01-current-rotated-20121010T1010Z',
-                    u'fakerepo02-current-rotated-20121010T1010Z'
+                'fake-current-rotated-20121010T1010Z': set([
+                    'fakerepo01-current-rotated-20121010T1010Z',
+                    'fakerepo02-current-rotated-20121010T1010Z'
                 ]),
-                u'fake-current-rotated-20121011T1010Z': set([
-                    u'fakerepo01-current-rotated-20121011T1010Z',
-                    u'fakerepo02-current-rotated-20121011T1010Z',
+                'fake-current-rotated-20121011T1010Z': set([
+                    'fakerepo01-current-rotated-20121011T1010Z',
+                    'fakerepo02-current-rotated-20121011T1010Z',
                 ]),
-                u'fake-current-rotated-20121012T1010Z': set([
-                    u'fakerepo01-current-rotated-20121012T1010Z',
-                    u'fakerepo02-current-rotated-20121012T1010Z',
+                'fake-current-rotated-20121012T1010Z': set([
+                    'fakerepo01-current-rotated-20121012T1010Z',
+                    'fakerepo02-current-rotated-20121012T1010Z',
                 ]),
-                u'fakerepo01-current': set([]),
-                u'fakerepo01-current-rotated-20121010T1010Z': set([]),
-                u'fakerepo01-current-rotated-20121011T1010Z': set([]),
-                u'fakerepo01-current-rotated-20121012T1010Z': set([]),
-                u'fakerepo02-current': set([]),
-                u'fakerepo02-current-rotated-20121010T1010Z': set([]),
-                u'fakerepo02-current-rotated-20121011T1010Z': set([]),
-                u'fakerepo02-current-rotated-20121012T1010Z': set([]),
+                'fakerepo01-current': set([]),
+                'fakerepo01-current-rotated-20121010T1010Z': set([]),
+                'fakerepo01-current-rotated-20121011T1010Z': set([]),
+                'fakerepo01-current-rotated-20121012T1010Z': set([]),
+                'fakerepo02-current': set([]),
+                'fakerepo02-current-rotated-20121010T1010Z': set([]),
+                'fakerepo02-current-rotated-20121011T1010Z': set([]),
+                'fakerepo02-current-rotated-20121012T1010Z': set([]),
             }
             assert state.snapshot_map == expected
 
@@ -401,17 +401,17 @@ def do_snapshot_update_rotating(config):
         ]
     ).issubset(state.snapshots)
     expected = {
-        u'fake-current': set([
-            u'fakerepo01-current', u'fakerepo02-current'
+        'fake-current': set([
+            'fakerepo01-current', 'fakerepo02-current'
         ]),
-        u'fake-current-rotated-20121010T1010Z': set([
-            u'fakerepo01-current-rotated-20121010T1010Z',
-            u'fakerepo02-current-rotated-20121010T1010Z'
+        'fake-current-rotated-20121010T1010Z': set([
+            'fakerepo01-current-rotated-20121010T1010Z',
+            'fakerepo02-current-rotated-20121010T1010Z'
         ]),
-        u'fakerepo01-current': set([]),
-        u'fakerepo01-current-rotated-20121010T1010Z': set([]),
-        u'fakerepo02-current': set([]),
-        u'fakerepo02-current-rotated-20121010T1010Z': set([]),
+        'fakerepo01-current': set([]),
+        'fakerepo01-current-rotated-20121010T1010Z': set([]),
+        'fakerepo02-current': set([]),
+        'fakerepo02-current-rotated-20121010T1010Z': set([]),
     }
     assert state.snapshot_map == expected
 
@@ -534,9 +534,9 @@ def do_publish_create_rotating(config):
         'fakerepo02/current stable',
     ]) == state.publishes
     expect = {
-        u'fake/current stable': set([u'fake-current']),
-        u'fakerepo01/current stable': set([u'fakerepo01-current']),
-        u'fakerepo02/current stable': set([u'fakerepo02-current'])
+        'fake/current stable': set(['fake-current']),
+        'fakerepo01/current stable': set(['fakerepo01-current']),
+        'fakerepo02/current stable': set(['fakerepo02-current'])
     }
     assert expect == state.publish_map
 
@@ -645,9 +645,9 @@ def test_publish_update_rotating():
             state = SystemStateReader()
             state.read()
             expect = {
-                u'fake/current stable': set([u'fake-current']),
-                u'fakerepo01/current stable': set([u'fakerepo01-current']),
-                u'fakerepo02/current stable': set([u'fakerepo02-current'])
+                'fake/current stable': set(['fake-current']),
+                'fakerepo01/current stable': set(['fakerepo01-current']),
+                'fakerepo02/current stable': set(['fakerepo02-current'])
             }
             assert expect == state.publish_map
 
@@ -670,9 +670,9 @@ def test_publish_snapshot_update_rotating():
             state = SystemStateReader()
             state.read()
             expect = {
-                u'fake/current stable': set([u'fake-current']),
-                u'fakerepo01/current stable': set([u'fakerepo01-current']),
-                u'fakerepo02/current stable': set([u'fakerepo02-current'])
+                'fake/current stable': set(['fake-current']),
+                'fakerepo01/current stable': set(['fakerepo01-current']),
+                'fakerepo02/current stable': set(['fakerepo02-current'])
             }
             assert expect == state.publish_map
 

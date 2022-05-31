@@ -94,13 +94,13 @@ def create_config(test_input):
     """
     input_ = read_yml(test_input)
     if 'mirror' in input_:
-        for mirror in input_['mirror'].values():
+        for mirror in list(input_['mirror'].values()):
             if 'components' not in mirror:
                 mirror['components'] = "main"
             if 'distribution' not in mirror:
                 mirror['distribution'] = "main"
     if 'publish' in input_:
-        for publish in input_['publish'].values():
+        for publish in list(input_['publish'].values()):
             for item in publish:
                 if 'components' not in item:
                     item['components'] = "main"

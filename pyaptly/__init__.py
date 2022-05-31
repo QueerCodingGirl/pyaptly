@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 """Aptly mirror/snapshot managment automation."""
 import argparse
 import codecs
@@ -30,7 +30,7 @@ def init_hypothesis():
             Settings.register_profile("ci", Settings(
                 max_examples=10000
             ))
-            Settings.load_profile(os.getenv(u'HYPOTHESIS_PROFILE', 'default'))
+            Settings.load_profile(os.getenv('HYPOTHESIS_PROFILE', 'default'))
     except (ImportError, AttributeError):  # pragma: no cover
         pass
 
@@ -562,8 +562,6 @@ class SystemStateReader(object):
         self.gpg_keys = set()
         data, _ = call_output([
             "gpg",
-            "--no-default-keyring",
-            "--keyring", "trustedkeys.gpg",
             "--list-keys",
             "--with-colons"
         ])
@@ -784,7 +782,7 @@ def main(argv=None):
     lg.debug("Args: %s", vars(args))
 
     with codecs.open(args.config, 'r', encoding="UTF-8") as cfgfile:
-        cfg = yaml.load(cfgfile)
+        cfg = yaml.safe_load(cfgfile)
     state.read()
 
     # run function for selected subparser
@@ -937,7 +935,7 @@ def publish_cmd_create(cfg,
     has_source = False
     num_sources = 0
 
-    for conf, conf_value in publish_config.items():
+    for conf, conf_value in list(publish_config.items()):
 
         if conf == 'skip-contents':
             if conf_value:
@@ -1161,7 +1159,7 @@ def repo_cmd_create(cfg, repo_name, repo_config):
     options       = []
     endpoint_args = ['create', repo_name]
 
-    for conf, conf_value in repo_config.items():
+    for conf, conf_value in list(repo_config.items()):
         if conf == 'architectures':
             options.append(
                 '-architectures=%s' %
@@ -1207,7 +1205,7 @@ def repo(cfg, args):
     if args.repo_name == "all":
         commands = [
             cmd_repo(cfg, repo_name, repo_conf)
-            for repo_name, repo_conf in cfg['repo'].items()
+            for repo_name, repo_conf in list(cfg['repo'].items())
         ]
 
         for cmd in Command.order_commands(commands, state.has_dependency):
@@ -1254,7 +1252,7 @@ def publish(cfg, args):
     if args.publish_name == "all":
         commands = [
             cmd_publish(cfg, publish_name, publish_conf_entry)
-            for publish_name, publish_conf in cfg['publish'].items()
+            for publish_name, publish_conf in list(cfg['publish'].items())
             for publish_conf_entry in publish_conf
             if publish_conf_entry.get('automatic-update', 'false') is True
         ]
@@ -1290,7 +1288,7 @@ def snapshot(cfg, args):
     :type   cfg: dict
     :param args: The command-line arguments read with :py:mod:`argparse`
     :type  args: namespace"""
-    lg.debug("Snapshots to create: %s", cfg['snapshot'].keys())
+    lg.debug("Snapshots to create: %s", list(cfg['snapshot'].keys()))
 
     snapshot_cmds = {
         'create': cmd_snapshot_create,
@@ -1302,7 +1300,7 @@ def snapshot(cfg, args):
     if args.snapshot_name == "all":
         commands = [
             cmd
-            for snapshot_name, snapshot_config in cfg['snapshot'].items()
+            for snapshot_name, snapshot_config in list(cfg['snapshot'].items())
             for cmd in cmd_snapshot(cfg, snapshot_name, snapshot_config)
         ]
 
@@ -1560,7 +1558,7 @@ def cmd_snapshot_update(cfg, snapshot_name, snapshot_config):
                                publish_name,
                                publish_conf_entry,
                                ignore_existing=True)
-            for publish_name, publish_conf in cfg['publish'].items()
+            for publish_name, publish_conf in list(cfg['publish'].items())
             for publish_conf_entry in publish_conf
             if publish_conf_entry.get('automatic-update', 'false') is True
             if is_publish_affected(publish_name, publish_conf_entry)
@@ -1697,7 +1695,7 @@ def mirror(cfg, args):
     cmd_mirror = mirror_cmds[args.task]
 
     if args.mirror_name == "all":
-        for mirror_name, mirror_config in cfg['mirror'].items():
+        for mirror_name, mirror_config in list(cfg['mirror'].items()):
             cmd_mirror(cfg, mirror_name, mirror_config)
     else:
         if args.mirror_name in cfg['mirror']:
@@ -1737,17 +1735,14 @@ def add_gpg_keys(mirror_config):
             for key in keys:
                 keys_urls[key] = None
 
-    for key in keys_urls.keys():
+    for key in list(keys_urls.keys()):
         if key in state.gpg_keys:
             continue
         try:
             key_command = [
                 "gpg",
-                "--no-default-keyring",
-                "--keyring",
-                "trustedkeys.gpg",
                 "--keyserver",
-                "pool.sks-keyservers.net",
+                "hkp://keyserver.ubuntu.com:80",
                 "--recv-keys",
                 key
             ]
@@ -1758,8 +1753,7 @@ def add_gpg_keys(mirror_config):
             if url:
                 key_command = (
                     "wget -q -O - %s | "
-                    "gpg --no-default-keyring "
-                    "--keyring trustedkeys.gpg --import"
+                    "gpg --import"
                 ) % url
                 subprocess.check_call(['bash', '-c', key_command])
             else:
