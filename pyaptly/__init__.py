@@ -674,6 +674,47 @@ class SystemStateReader(object):
                 "Unknown dependency to resolve: %s" % str(dependency)
             )
 
+def read_yml(file_):
+    """Read and merge a yml file.
+
+    :param file_: file to read
+    :type  file_: str"""
+    directory = os.path.dirname(file_)
+    with codecs.open(file_, encoding="UTF-8") as f:
+        main_yml = dict(yaml.safe_load(f.read()))
+    merges = []
+    if "merge" in main_yml:
+        for merge_path in main_yml['merge']:
+            path = os.path.join(
+                directory,
+                merge_path,
+            )
+            merges.append(read_yml(path))
+        del main_yml['merge']
+    for merge_struct in merges:
+        main_yml = merge(main_yml, merge_struct)
+    return main_yml
+
+
+def merge(a, b):
+    """Merge two dicts.
+
+    :param a: dict a
+    :type  a: dict
+    :param b: dict b
+    :type  b: dict
+    :rtype:   dict
+    """
+    if isinstance(a, dict) and isinstance(b, dict):
+        d = dict(a)
+        d.update(dict(((k, merge(a.get(k, None), b[k])) for k in b)))
+        for k, v in list(d.items()):
+            if v == "None":
+                del d[k]
+        return d
+    return b
+
+
 
 state = SystemStateReader()
 
@@ -781,8 +822,8 @@ def main(argv=None):
         _logging_setup = True  # noqa
     lg.debug("Args: %s", vars(args))
 
-    with codecs.open(args.config, 'r', encoding="UTF-8") as cfgfile:
-        cfg = yaml.safe_load(cfgfile)
+    # with codecs.open(args.config, 'r', encoding="UTF-8") as cfgfile:
+    cfg = read_yml(args.config)
     state.read()
 
     # run function for selected subparser
