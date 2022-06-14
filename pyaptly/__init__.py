@@ -1003,6 +1003,8 @@ def publish_cmd_create(cfg,
 
         elif conf == 'gpg-key':
             options.append('-gpg-key=%s' % conf_value)
+        elif conf == 'passphrase-file':
+            options.append('-passphrase-file=%s' % conf_value)
         elif conf == 'automatic-update':
             # Ignored here
             pass
