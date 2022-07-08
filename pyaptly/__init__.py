@@ -975,6 +975,7 @@ def publish_cmd_create(cfg,
 
     has_source = False
     num_sources = 0
+    options.append('-batch=true')
 
     for conf, conf_value in list(publish_config.items()):
 
@@ -1112,9 +1113,13 @@ def publish_cmd_update(cfg,
     publish_cmd = ['aptly', 'publish']
     options     = []
     args        = [publish_config['distribution'], publish_name]
+    options.append('-batch=true')
 
     if 'skip-contents' in publish_config and publish_config['skip-contents']:
         options.append('-skip-contents=true')
+
+    if 'passphrase-file' in publish_config and publish_config['passphrase-file']:
+        options.append('-passphrase-file=%s' % publish_config['passphrase-file'])
 
     if 'repo' in publish_config:
         publish_cmd.append('update')
