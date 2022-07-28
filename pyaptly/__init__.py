@@ -982,6 +982,9 @@ def publish_cmd_create(cfg,
         if conf == 'skip-contents':
             if conf_value:
                 options.append('-skip-contents=true')
+        elif conf == 'skip-bz2':
+            if conf_value:
+                options.append('-skip-bz2=true')
         elif conf == 'architectures':  # pragma: no cover
             options.append(
                 '-architectures=%s' %
@@ -1118,6 +1121,9 @@ def publish_cmd_update(cfg,
     if 'skip-contents' in publish_config and publish_config['skip-contents']:
         options.append('-skip-contents=true')
 
+    if 'skip-bz2' in publish_config and publish_config['skip-bz2']:
+        options.append('-skip-bz2=true')
+
     if 'passphrase-file' in publish_config and publish_config['passphrase-file']:
         options.append('-passphrase-file=%s' % publish_config['passphrase-file'])
 
@@ -1185,6 +1191,9 @@ def publish_cmd_update(cfg,
 
     if 'skip-contents' in publish_config and publish_config['skip-contents']:
         options.append('-skip-contents=true')
+
+    if 'skip-bz2' in publish_config and publish_config['skip-bz2']:
+        options.append('-skip-bz2=true')
 
     return Command(publish_cmd + options + args + new_snapshots)
 
