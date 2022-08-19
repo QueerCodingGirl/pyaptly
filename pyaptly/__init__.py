@@ -1847,6 +1847,12 @@ def cmd_mirror_create(cfg, mirror_name, mirror_config):
             ','.join(unit_or_list_to_list(mirror_config['architectures']))
         ))
 
+    if 'filter' in mirror_config:
+        aptly_cmd.append('-filter={0}'.format(
+            ','.join(unit_or_list_to_list(mirror_config['filter']))
+        ))
+
+
     aptly_cmd.append(mirror_name)
     aptly_cmd.append(mirror_config['archive'])
     aptly_cmd.append(mirror_config['distribution'])
